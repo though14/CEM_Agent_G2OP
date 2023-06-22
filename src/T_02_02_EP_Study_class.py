@@ -39,17 +39,33 @@ class TOPO_Study():
         return self.result_path
     
     
-    def ep_read(self):
+    def ep_read(self, EP_NUM_LOC=0):
         
-        return self.ep_num
+        ep_num = EP_NUM_LOC
+        
+        # self.ep_num = ep_num #should we update init value?????
+        
+        return ep_num
     
     
-    def data_read(self, PATH_OBJ=None):
+    def data_read(self, PATH_OBJ=None, OUTPUT_FORMAT = 'LIST'):
         
         with open(PATH_OBJ, 'rb') as filehandle:
             read_obj = pickle.load(filehandle)
             
-        return read_obj
+            
+        if OUTPUT_FORMAT == 'LIST':
+            
+            
+            return read_obj
+        
+        elif OUTPUT_FORMAT == 'DF':
+        
+            df_ro = pd.DataFrame(read_obj, columns=['ep_num','TS','before','after'])
+            
+            return df_ro
+        
+            
     
     
     def obs_read(self ):
@@ -135,8 +151,8 @@ class TOPO_Study():
     
     
     
-    def topo_change_check(self,location_change = None):
-
+    def topo_change_check(self,  location_change = None, PRINT=None):
+        # all_obs = ALL_OBS
         
         change_list= np.array([])
         c_list=np.array([])
@@ -181,16 +197,101 @@ class TOPO_Study():
             df_change_list = pd.concat([df_sub_id, df_change_list_loc, df_obs_attr], axis=1)
             
             df = df_change_list
+        
+        if PRINT == True:
             
-        print(df.iloc[location_change])
+            print('---')
+            # print(f'change of the episode number: {}')
+            print(df.iloc[location_change])
+            print('---')
             
+        else:
+            pass
+        
         return df.iloc[location_change]
     
         
+    
+    def per_ep_change_check(self, DATAFRAME_Read_OBJ= None,  HOW_MANY_CHRONICS=1000 ):
+        
+        df_ro = DATAFRAME_Read_OBJ
+        
+        # df_init = pd.DataFrame()
+        all_per_ep_change = pd.DataFrame()
+        
+        for EP_NUM in range(0,1000):     #k can go till 999 == range(0,1000)  #for now let's put k=8, since it has 2 values
+            
+            
+            df_ro_local = df_ro[df_ro['ep_num']==EP_NUM] #currently, k = episode number
+            df_ro_local=df_ro_local.reset_index(drop=True)
+
+            df_ro_local
+            
+            all_per_ep_change_local=pd.DataFrame()
+            
+            for q in range(len(df_ro_local)):
+                local_loc_change = self.change_loc(df_ro_local.loc[q]['before'][0], df_ro_local.loc[q]['after'][0])
+                
+                local_topo_change = self.topo_change_check(local_loc_change)
+                local_topo_change = local_topo_change.reset_index(drop=True)
+                
+                # change_local = [local_topo_change]
+                change_local = []
+                change_local.append(local_topo_change)
+                
+                
+                
+
+                
+                local_ep_num = df_ro_local['ep_num'][q]
+                local_TS = df_ro_local['TS'][q]
+                
+                local_ep_num_df = pd.Series(local_ep_num)
+                local_TS_df = pd.Series(local_TS)
+                
+                local_ep_ts = pd.concat([local_ep_num_df.rename('ep_num'),local_TS_df.rename('TS')], axis=1)
+                local_change_df = pd.Series(change_local)
+                # local_change_df = local_change_df.reset_index(drop=True)
+                
+                local_change_df_list=list(local_change_df)
+                    
+                per_ep_change = pd.concat([local_ep_ts, local_change_df.rename('changes')], axis=1)  #can access change info by: per_ep_change['changes'][0]
+                
+                all_per_ep_change_local = pd.concat([all_per_ep_change_local, per_ep_change])
+            # per_ep_change = local_ep_ts.insert(2,'changes',change_local)
+            
+            all_per_ep_change = pd.concat([all_per_ep_change, all_per_ep_change_local])
+            all_per_ep_change = all_per_ep_change.reset_index(drop=True)
+        # all_per_ep_change = per_ep_change_init.append(per_ep_change)
+            
+        
+                
+        return all_per_ep_change
+    
+    
+    # def anal_topo_change(self, CHANGED_DATA = None):
+    #     data_tba = CHANGED_DATA  #tba stands for to_be_analyzed
+    
+    def find_pattern(self,df):
+        # Combine all columns into a single string column
+        combined_data = df.apply(lambda x: ' '.join(x.map(str)), axis=1)
+    
+        # Count the occurrences of each pattern
+        pattern_counts = combined_data.value_counts()
+    
+        return pattern_counts
+        
+        
+        
+          
+                    
+                    
+
         
         
         
         
+#%%        
         
 if __name__ == "__main__" :
     
@@ -204,15 +305,68 @@ if __name__ == "__main__" :
     # a.path_read(file_name)
     # a.ep_read()
     all_obs= a.obs_read()
-    read_obj=a.data_read(a.path_read(file_name))
+    read_obj=a.data_read(a.path_read(file_name), 'LIST')
+    check_read_obj = a.data_read(a.path_read(file_name), 'DF')
     
     # topo_tb = a.topo_table(all_obs)
 
     loc_change = a.change_loc(read_obj[0][2][0], read_obj[0][3][0])
     
     change_location = a.topo_change_check(loc_change)
+    
+    per_ep_change = a.per_ep_change_check(DATAFRAME_Read_OBJ=check_read_obj)
+    
+    pattern = a.find_pattern(per_ep_change['changes'][0])
+    
+    
+    # for i in range(0,100):
+    #     ep_num_b = a.ep_read(i)
+    #     loc_change_b = a.change_loc(read_obj[ep_num_b][2][0], read_obj[ep_num_b][3][0]) 
+    #     change_location_b = a.topo_change_check(loc_change_b)
+            
         
+#%%
+    # df_ro = pd.DataFrame(read_obj, columns=['ep_num','TS','before','after'])
+    # for k in range(0,1000):     #k can go till 999 == range(0,1000)  #for now let's put k=8, since it has 2 values
         
+    #     if k==8:   
+    #         df_ro_local = df_ro[df_ro['ep_num']==k] #currently, k = episode number
+    #         df_ro_local=df_ro_local.reset_index(drop=True)
+
+    #         df_ro_local
+            
+    #         for q in range(len(df_ro_local)):
+    #             local_loc_change = a.change_loc(df_ro_local.loc[q]['before'][0], df_ro_local.loc[q]['after'][0])
+                
+    #             local_topo_change = a.topo_change_check(local_loc_change)
+    #             local_topo_change = local_topo_change.reset_index(drop=True)
+                
+    #             change_local = [local_topo_change]
+    #             change_local.append(local_topo_change)
+                
+                
+                
+
+                
+    #         local_ep_num = df_ro_local['ep_num']
+    #         local_TS = df_ro_local['TS']
+            
+    #         local_ep_ts = pd.concat([local_ep_num,local_TS], axis=1)
+    #         local_change_df = pd.Series(change_local)
+            
+    #         local_change_df_list=list(local_change_df)
+                
+    #         per_ep_change = pd.concat([local_ep_ts, local_change_df.rename('changes')], axis=1)  #can access change info by: per_ep_change['changes'][0]
+            
+    #         # per_ep_change = local_ep_ts.insert(2,'changes',change_local)
+    #         # 
+
+            
+            
+      
+                
+                
         
-        
+    #     else:
+    #         pass
         

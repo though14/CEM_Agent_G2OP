@@ -26,6 +26,9 @@ class TOPO_Study():
         self.path_info = None
         self.all_obs =[]
         
+        self.episode_studied_res = None
+        self.this_ep_res = None
+        
     def path_read(self, FILE_NAME=None):
         
         path_info  = os.path.join(self.path_str, FILE_NAME)
@@ -70,9 +73,12 @@ class TOPO_Study():
     
     def obs_read(self ):
         episode_studied_res = EpisodeData.list_episode(self.result_path)
+        self.episode_studied_res = episode_studied_res
         
         
         this_ep_res = EpisodeData.from_disk(*episode_studied_res[self.ep_num])
+        self.this_ep_res = this_ep_res
+        
         ep = this_ep_res
 
 
@@ -81,9 +87,18 @@ class TOPO_Study():
         
         all_obs = [el for el in eos]
         
-        self.ll_obs = all_obs
+        self.all_obs = all_obs
         
         return all_obs
+    
+    
+    def ep_result(self, EP_NUM=0):
+        self.episode_studied_res
+        
+        self.this_ep_res
+        
+        return self.this_ep_res
+        
     
     
     def topo_table(self, all_obs=None):
@@ -280,6 +295,56 @@ class TOPO_Study():
         pattern_counts = combined_data.value_counts()
     
         return pattern_counts
+    
+    
+    def survival_length(self, EPISODE_NUMBER = None):
+        if EPISODE_NUMBER == None:
+
+            epr = self.ep_result(EP_NUM = self.ep_num)
+            eos = epr.observations
+            
+            chronics_max_step = int(epr.meta['chronics_max_timestep'])
+            this_agent_survived_step = eos._game_over
+            
+            if this_agent_survived_step >= chronics_max_step:
+                print('fully survived')
+            else:
+                print(f'In this episode, Agent survived {this_agent_survived_step}/{chronics_max_step}')
+                
+        else:
+            episode_studied_res = EpisodeData.list_episode(self.result_path)
+            epr = EpisodeData.from_disk(*episode_studied_res[EPISODE_NUMBER])
+            eos = epr.observations
+            
+            chronics_max_step = int(epr.meta['chronics_max_timestep'])
+            this_agent_survived_step = eos._game_over
+            
+            # df = pd.DataFrame()
+            data = {'EP_MAX_STEP':chronics_max_step, 'AGENT_MAX_STEP': this_agent_survived_step}
+            df = pd.DataFrame(data, index=[0])
+            
+            
+                
+            
+            if this_agent_survived_step >= chronics_max_step:
+                print(f'EP{EPISODE_NUMBER}: fully survived {this_agent_survived_step}/{chronics_max_step}')
+            else:
+                print(f'In this episode{EPISODE_NUMBER}, Agent survived {this_agent_survived_step}/{chronics_max_step}')
+                
+                
+        return df
+    
+    
+    # def survival_matrix(self, df_FROM_survival_length = None):
+        
+    #     lc_df = df_FROM_survival_length
+    #     lc_df_updated = pd.DataFrame()
+    #     lc_df_updated.join(lc_df)
+        
+    #     return lc_df_updated
+            
+                
+        
         
         
         
@@ -317,6 +382,16 @@ if __name__ == "__main__" :
     per_ep_change = a.per_ep_change_check(DATAFRAME_Read_OBJ=check_read_obj)
     
     pattern = a.find_pattern(per_ep_change['changes'][0])
+    
+    # survived_step = a.survival_length()
+    for_Survived_data = pd.DataFrame()
+    for k in range(0,10):
+        for_survived_step = a.survival_length(EPISODE_NUMBER=k)
+       
+        for_Survived_data.join(for_survived_step)
+        
+    
+    
     
     
     # for i in range(0,100):

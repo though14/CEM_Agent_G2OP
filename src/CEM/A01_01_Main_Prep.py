@@ -20,7 +20,10 @@ import json
 
 # torch.set_default_device('cuda')
 
-env_name = "l2rpn_2019"
+env_name_l2rpn = "l2rpn_2019_train"
+env_name_rte = "rte_case14_realistic_train"
+
+env_name_l2rpn_test = "l2rpn_2019_test"
 
 
 #%%
@@ -56,7 +59,7 @@ Soft Constraint
 
 """
 from grid2op.Parameters import Parameters
-from grid2op.Action import TopologyAction
+from grid2op.Action import TopologyAction,  TopologyChangeAndDispatchAction
 from grid2op.Reward import L2RPNReward
 
 #Creating Parameters
@@ -76,19 +79,43 @@ p.HARD_OVERFLOW_THRESHOLD = 1
 p.NO_OVERFLOW_DISCONNECTION = True
 
 
-thermal_limit = [1000,1000,1000,1000,1000,1000,1000,760,450,760,380,380,760,760,380,760,380,380,2000,2000]
-
+# thermal_limit = [1000,1000,1000,1000,1000,1000,1000,760,450,760,380,380,760,760,380,760,380,380,2000,2000]
+thermal_limit = [1000,1000,1000,1000,1000,1000,1000,760,380,380,760,450,760,2000,2000,380,380,760,760,380 ]  #right way based on the representation
 th_lim = np.array(thermal_limit)
 
 #after setting all the parameter, we make the environment
-env_out = grid2op.make(env_name, 
+env_out_rte = grid2op.make(env_name_rte, 
                    param=p,
-                   action_class = TopologyAction,
+                   action_class = TopologyChangeAndDispatchAction,
                    reward_class = L2RPNReward)
 
-env_out.set_thermal_limit(th_lim)
+env_out_rte.set_thermal_limit(th_lim)
 
-env_out
+env_out_rte
+
+
+env_out_l2rpn = grid2op.make(env_name_l2rpn, 
+                   param=p,
+                   action_class = TopologyChangeAndDispatchAction,
+                   reward_class = L2RPNReward)
+
+env_out_l2rpn.set_thermal_limit(th_lim)
+
+env_out_l2rpn
+
+
+env_out_l2rpn_test = grid2op.make(env_name_l2rpn_test, 
+                   param=p,
+                   action_class = TopologyChangeAndDispatchAction,
+                   reward_class = L2RPNReward)
+
+env_out_l2rpn_test.set_thermal_limit(th_lim)
+
+env_out_l2rpn_test
+
+"""
+action_space_class is written here: https://grid2op.readthedocs.io/en/latest/action.html#grid2op.Action.TopologyChangeAndDispatchAction
+"""
 #%%
 
 

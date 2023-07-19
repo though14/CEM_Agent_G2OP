@@ -1,0 +1,69 @@
+
+one vs DN
+
+
+The results for the my agent are:
+	For chronics with id 0153
+		 - cumulative reward: 105432.281250
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0206
+		 - cumulative reward: 104679.296875
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0286
+		 - cumulative reward: 119482.476562
+		 - number of time steps completed: 7488 / 7488
+	For chronics with id 0304
+		 - cumulative reward: 119887.945312
+		 - number of time steps completed: 7488 / 7488
+	For chronics with id 0465
+		 - cumulative reward: 109266.476562
+		 - number of time steps completed: 6912 / 6912
+	For chronics with id 0494
+		 - cumulative reward: 124703.078125
+		 - number of time steps completed: 7776 / 7776
+	For chronics with id 0595
+		 - cumulative reward: 123057.414062
+		 - number of time steps completed: 7776 / 7776
+	For chronics with id 0630
+		 - cumulative reward: 104670.875000
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0785
+		 - cumulative reward: 30752.359375
+		 - number of time steps completed: 1945 / 7200
+	For chronics with id 0948
+		 - cumulative reward: 126306.984375
+		 - number of time steps completed: 8064 / 8064
+
+
+
+
+For chronics with id 0153
+		 - cumulative reward: 105498.968750
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0206
+		 - cumulative reward: 104909.101562
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0286
+		 - cumulative reward: 119562.679688
+		 - number of time steps completed: 7488 / 7488
+	For chronics with id 0304
+		 - cumulative reward: 119941.273438
+		 - number of time steps completed: 7488 / 7488
+	For chronics with id 0465
+		 - cumulative reward: 109234.171875
+		 - number of time steps completed: 6912 / 6912
+	For chronics with id 0494
+		 - cumulative reward: 124736.195312
+		 - number of time steps completed: 7776 / 7776
+	For chronics with id 0595
+		 - cumulative reward: 123107.781250
+		 - number of time steps completed: 7776 / 7776
+	For chronics with id 0630
+		 - cumulative reward: 104713.226562
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0785
+		 - cumulative reward: 113917.304688
+		 - number of time steps completed: 7200 / 7200
+	For chronics with id 0948
+		 - cumulative reward: 75279.781250
+		 - number of time steps completed: 4828 / 8064

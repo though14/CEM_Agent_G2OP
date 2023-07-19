@@ -1,0 +1,17 @@
+Eight
+	For chronics with id 0153
+		 - cumulative reward: 104738.359375
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0206
+		 - cumulative reward: 104307.789062
+		 - number of time steps completed: 6624 / 6624
+
+DN
+
+The results for DoNothing agent are:
+	For chronics with id 0153
+		 - cumulative reward: 105498.968750
+		 - number of time steps completed: 6624 / 6624
+	For chronics with id 0206
+		 - cumulative reward: 104909.101562
+		 - number of time steps completed: 6624 / 6624

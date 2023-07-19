@@ -159,7 +159,7 @@ if __name__ == "__main__":
     obs_size = env.observation_space.shape[0]
     n_actions = env.action_space.n
     
-    act_space_attr_to_keep = ["change_bus", 'redispatch']
+    act_space_attr_to_keep = ["change_bus"]
     obs_space_attr_to_keep = ["gen_p", "gen_q", "gen_v", "load_p", "load_q", "load_v", "p_or", "q_or", "v_or", "a_or", "p_ex", "q_ex", "v_ex", "a_ex", "rho", "topo_vect", "line_status", "timestep_overflow"]
     
     
@@ -179,10 +179,10 @@ if __name__ == "__main__":
     objective = nn.CrossEntropyLoss()
     optimizer = optim.Adam(params=net.parameters(), lr=1e-4)
     
-    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\02_G2OP\\File\\Agent\\July"
+    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July"
     
     """
-    one : prototype, 
+    one : prototype,
 
     """
     

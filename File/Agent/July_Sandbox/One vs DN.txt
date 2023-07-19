@@ -1,0 +1,19 @@
+One vs DN
+
+The results for the my agent are:
+	For chronics with id 0038
+		 - cumulative reward: 64754.890625
+		 - number of time steps completed: 1005 / 8064
+	For chronics with id 0186
+		 - cumulative reward: 458467.031250
+		 - number of time steps completed: 7348 / 8064
+
+
+
+
+For chronics with id 0038
+		 - cumulative reward: 287046.812500
+		 - number of time steps completed: 4551 / 8064
+	For chronics with id 0186
+		 - cumulative reward: 180922.812500
+		 - number of time steps completed: 2820 / 8064

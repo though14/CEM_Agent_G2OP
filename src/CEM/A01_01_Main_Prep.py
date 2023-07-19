@@ -22,8 +22,12 @@ import json
 
 env_name_l2rpn = "l2rpn_2019_train"
 env_name_rte = "rte_case14_realistic_train"
+env_name_rte_test = "rte_case14_realistic_test"
 
 env_name_l2rpn_test = "l2rpn_2019_test"
+
+env_name_sandbox = "l2rpn_case14_sandbox_train"
+env_name_sandbox_test ="l2rpn_case14_sandbox_test"
 
 
 #%%
@@ -71,12 +75,12 @@ p.MAX_SUB_CHANGED = 1
 #Cooltime for substation
 p.NB_TIMESTEP_COOLDOWN_SUB = 3
 
-#Setting Hard Flow time as 150, threshold should became 1
-#at 150% it will be disconnected
-p.HARD_OVERFLOW_THRESHOLD = 1
+# #Setting Hard Flow time as 150, threshold should became 1
+# #at 150% it will be disconnected
+# p.HARD_OVERFLOW_THRESHOLD = 2
 
-#make it not connected even if goes over 100% of power line limit
-p.NO_OVERFLOW_DISCONNECTION = True
+# #make it not connected even if goes over 100% of power line limit
+# p.NO_OVERFLOW_DISCONNECTION = False
 
 
 # thermal_limit = [1000,1000,1000,1000,1000,1000,1000,760,450,760,380,380,760,760,380,760,380,380,2000,2000]
@@ -94,9 +98,19 @@ env_out_rte.set_thermal_limit(th_lim)
 env_out_rte
 
 
-env_out_l2rpn = grid2op.make(env_name_l2rpn, 
+env_out_rte_test = grid2op.make(env_name_rte_test, 
                    param=p,
                    action_class = TopologyChangeAndDispatchAction,
+                   reward_class = L2RPNReward)
+
+env_out_rte_test.set_thermal_limit(th_lim)
+
+env_out_rte_test
+
+
+env_out_l2rpn = grid2op.make(env_name_l2rpn, 
+                   param=p,
+                   action_class = TopologyAction,
                    reward_class = L2RPNReward)
 
 env_out_l2rpn.set_thermal_limit(th_lim)
@@ -106,12 +120,35 @@ env_out_l2rpn
 
 env_out_l2rpn_test = grid2op.make(env_name_l2rpn_test, 
                    param=p,
-                   action_class = TopologyChangeAndDispatchAction,
+                   action_class = TopologyAction,
                    reward_class = L2RPNReward)
 
 env_out_l2rpn_test.set_thermal_limit(th_lim)
 
 env_out_l2rpn_test
+
+
+
+env_sandbox = grid2op.make(env_name_sandbox, 
+                   param=p,
+                   action_class = TopologyAction,
+                   reward_class = L2RPNReward)
+
+env_sandbox.set_thermal_limit(th_lim)
+
+env_sandbox
+
+
+env_sandbox_test = grid2op.make(env_name_sandbox_test, 
+                   param=p,
+                   action_class = TopologyAction,
+                   reward_class = L2RPNReward)
+
+env_sandbox_test.set_thermal_limit(th_lim)
+
+env_sandbox_test
+
+
 
 """
 action_space_class is written here: https://grid2op.readthedocs.io/en/latest/action.html#grid2op.Action.TopologyChangeAndDispatchAction

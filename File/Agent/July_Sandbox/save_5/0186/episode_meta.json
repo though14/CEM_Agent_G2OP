@@ -1,0 +1,11 @@
+{
+    "agent_seed": null,
+    "backend_type": "PandaPowerBackend_l2rpn_case14_sandbox_test",
+    "chronics_max_timestep": "8064",
+    "chronics_path": "C:\\Users\\thoug\\data_grid2op\\l2rpn_case14_sandbox_test\\chronics\\0186",
+    "cumulative_reward": 35454.79296875,
+    "env_seed": null,
+    "env_type": "Environment_l2rpn_case14_sandbox_test",
+    "grid_path": "C:\\Users\\thoug\\data_grid2op\\l2rpn_case14_sandbox_test\\grid.json",
+    "nb_timestep_played": 519
+}

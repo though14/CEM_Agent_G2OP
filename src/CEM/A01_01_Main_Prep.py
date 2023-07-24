@@ -148,6 +148,12 @@ env_sandbox_test.set_thermal_limit(th_lim)
 
 env_sandbox_test
 
+env_sandbox_test_no_p = grid2op.make(env_name_sandbox_test)
+
+env_sandbox_test_no_p.set_thermal_limit(th_lim)
+
+env_sandbox_test_no_p
+
 
 
 """

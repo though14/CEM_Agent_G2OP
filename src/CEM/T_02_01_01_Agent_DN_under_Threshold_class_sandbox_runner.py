@@ -237,6 +237,8 @@ if __name__ == "__main__":
     Three : with parameter about substation only --> did train with just sandbox, not the parameter/topology actioned one. Therefore not deployable
     Four : fixed issues in Three. Same as Three with right environment with actionspace is Topology only --> but grid initialization is not working. Not good.
             Maybe just disabling Thermal Limit????
+            
+    Five : used by RANDOM, but outcome isn't so good. I think CEM is not made for expedition
 
     """
     

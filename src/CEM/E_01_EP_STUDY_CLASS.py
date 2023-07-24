@@ -14,13 +14,17 @@ import plotly.io as pio
 import numpy as np
 import pandas as pd
 import pickle
+from tqdm import tqdm
 
+from A01_01_Main_Prep import env_sandbox as env_out
+from A01_01_Main_Prep import env_sandbox_test as env_test
+from A01_01_Main_Prep import env_sandbox_test_no_p as env_sand_test
 
 
 class TopoStudy():
     def __init__(self, 
                  PATH_FOLDER_INCLUDING_AGENT ="C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July_Sandbox",
-                 NAME_OF_FOLDER_WANT_TO_SEE = "save_2"
+                 NAME_OF_FOLDER_WANT_TO_SEE = "save_5"
                  ):
         self.path_name = PATH_FOLDER_INCLUDING_AGENT
         self.path_to_load = os.path.join(self.path_name, NAME_OF_FOLDER_WANT_TO_SEE)
@@ -33,6 +37,7 @@ class TopoStudy():
         
     
     def obs_read(self, NUM=0):
+        # EpisodeData.reboot(self)
         ep = EpisodeData.from_disk(*self.episode_studied_res[NUM])
         
         eos = ep.observations
@@ -40,6 +45,8 @@ class TopoStudy():
         all_obs = [el for el in eos] 
         
         return all_obs
+    
+
         
     
     def list_obs(self):
@@ -73,11 +80,11 @@ class TopoStudy():
         return list_obs
                     
                     
-    def save_list_obs(self, LIST_OBS):
+    def save_list_obs(self, LIST_OBS, NAME_SAVE ='obj_list.data' ):
         
         import pickle
         
-        with open('obj_list.data', 'wb') as filehandle:
+        with open(NAME_SAVE, 'wb') as filehandle:
             pickle.dump(LIST_OBS, filehandle)
             
             
@@ -108,7 +115,7 @@ class TopoStudy():
         change_list= np.array([])
         c_list=np.array([])
 
-        for sub_id in range(0,14):
+        for sub_id in tqdm(range(0,14)):
             dict_ = ALL_OBS[0].get_obj_connect_to(substation_id=sub_id)
 
             
@@ -176,6 +183,29 @@ class TopoStudy():
         return df.iloc[location_change]
     
     
+    def all_topology(self, ALL_OBS):
+        
+        all_obs = ALL_OBS
+        len_all_obs = len(all_obs)
+        
+        all_topo=[]
+        
+        for i in range(len_all_obs):
+            loc_topo=[]
+            
+            loc_topo = all_obs[i].topo_vect
+            
+            # loc_topo = np.where(loc_topo<0.5, 0,1)
+            
+            all_topo.append(loc_topo)
+            
+            
+        all_topo_df = pd.DataFrame(all_topo)
+            
+        return all_topo_df
+    
+    
+    
     def per_ep_change_check(self, DATAFRAME_Read_OBJ= None,  HOW_MANY_CHRONICS=1000 ):
         
         df_ro = DATAFRAME_Read_OBJ
@@ -183,7 +213,7 @@ class TopoStudy():
         # df_init = pd.DataFrame()
         all_per_ep_change = pd.DataFrame()
         
-        for EP_NUM in range(self.ep_length):     #k can go till 999 == range(0,1000)  #for now let's put k=8, since it has 2 values
+        for EP_NUM in tqdm(range(self.ep_length)):     #k can go till 999 == range(0,1000)  #for now let's put k=8, since it has 2 values
             
             
             df_ro_local = df_ro[df_ro['ep_num']==EP_NUM] #currently, k = episode number
@@ -295,6 +325,38 @@ class TopoStudy():
     
     
     
+    def analyze_pattern(self,pattern):
+        unique_patterns = {}
+        pattern_counts = {}
+        order_of_changes = []
+        base_pattern = None
+
+        for row in pattern:
+            pattern_str = str(row)
+            if pattern_str not in unique_patterns:
+                if base_pattern is None:
+                    pattern_name = 'b'
+                    base_pattern = pattern_str
+                else:
+                    pattern_name = 't' + str(len(unique_patterns))
+                unique_patterns[pattern_str] = pattern_name
+                pattern_counts[pattern_name] = 1
+                order_of_changes.append(pattern_name)
+            else:
+                pattern_name = unique_patterns[pattern_str]
+                if order_of_changes[-1] != pattern_name:
+                    pattern_counts[pattern_name] += 1
+                    order_of_changes.append(pattern_name)
+                else :
+                    pattern_counts[pattern_name] +=1
+
+        # Count occurrences of the base pattern
+        base_pattern_count = pattern_counts.get('b', 0)
+
+        return unique_patterns, pattern_counts, order_of_changes, base_pattern_count
+    
+    
+    
     def KPI(self, PER_EP_CHANGE):
         
         per_ep_change = PER_EP_CHANGE
@@ -323,6 +385,7 @@ class TopoStudy():
         
         
         return per_ep_topo_change_nr, mean_topo_depth
+    
         
         
         
@@ -332,14 +395,20 @@ class TopoStudy():
     
 if __name__ == "__main__" :
     
+    # EpisodeData.reboot()
+    env = grid2op.make('l2rpn_case14_sandbox_test')
+    env_sand_test
+    
     path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July_Sandbox"
-    path_to_save = os.path.join(path_name, 'save_3')
+    path_to_save = os.path.join(path_name, 'save_2')
     
     a = TopoStudy(path_name, path_to_save)
 #%%    
     all_obs = a.obs_read(0)
     
     list_obs = a.list_obs()
+    
+
     
     a.save_list_obs(list_obs)
     
@@ -358,7 +427,7 @@ if __name__ == "__main__" :
     pattern = a.find_pattern(per_ep_change['changes'][0])
     
     for_Survived_data = pd.DataFrame()
-    for k in range(0,5):
+    for k in range(0,2):
         for_survived_step = a.survival_length(EPISODE_NUMBER=k)
        
         for_Survived_data.join(for_survived_step)
@@ -368,6 +437,11 @@ if __name__ == "__main__" :
     
 #%% 
     nr_topo_changes, mean_sequence_length = a.KPI(per_ep_change)
+    
+    all_topo_list = a.all_topology(all_obs)
+    
+    pattern_list = a.analyze_pattern(all_topo_list.to_numpy())
+    
     
     """
     for i in range(0,14):

@@ -357,11 +357,13 @@ class TopoStudy():
     
     
     
-    def KPI(self, PER_EP_CHANGE):
+    def KPI(self, PER_EP_CHANGE, PATTERN_ANALYSIS):
         
         per_ep_change = PER_EP_CHANGE
+        pattern = PATTERN_ANALYSIS
         
         per_ep_topo_change_nr=per_ep_change['ep_num'].value_counts()
+        
         
         
         # loc_depth = per_ep_change['TS'].diff()
@@ -380,11 +382,13 @@ class TopoStudy():
         mean_topo_depth
         
         
-                
+        total_topology_change = len(pattern[2])
+        total_number_base = pattern[3]            
         
         
         
-        return per_ep_topo_change_nr, mean_topo_depth
+        # return per_ep_topo_change_nr, mean_topo_depth, total_topology_change, total_number_base
+        return mean_topo_depth, total_topology_change, total_number_base
     
         
         
@@ -436,11 +440,16 @@ if __name__ == "__main__" :
      
     
 #%% 
-    nr_topo_changes, mean_sequence_length = a.KPI(per_ep_change)
+    # nr_topo_changes, mean_sequence_length = a.KPI(per_ep_change)
     
     all_topo_list = a.all_topology(all_obs)
     
-    pattern_list = a.analyze_pattern(all_topo_list.to_numpy())
+    pattern_analysis = a.analyze_pattern(all_topo_list.to_numpy())
+    
+    
+    list_KPI = []
+    list_KPI = a.KPI(per_ep_change, pattern_analysis)
+    mean_sequence_length, nr_topo_change, nr_base_repetition = a.KPI(per_ep_change, pattern_analysis)
     
     
     """

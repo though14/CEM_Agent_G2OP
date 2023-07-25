@@ -1,0 +1,15 @@
+The results for the my agent are:
+	For chronics with id 197
+		 - cumulative reward: 13531.538086
+		 - number of time steps completed: 810 / 8064
+	For chronics with id 234
+		 - cumulative reward: 13215.746094
+		 - number of time steps completed: 812 / 8064
+
+DoNothing agent are:
+	For chronics with id 197
+		 - cumulative reward: 13554.583008
+		 - number of time steps completed: 810 / 8064
+	For chronics with id 234
+		 - cumulative reward: 13219.648438
+		 - number of time steps completed: 812 / 8064

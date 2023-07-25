@@ -10,6 +10,7 @@ import grid2op
 from grid2op.Episode import EpisodeData
 import plotly.graph_objects as go
 import plotly.io as pio
+import matplotlib.pyplot as plt
 
 import numpy as np
 import pandas as pd
@@ -139,9 +140,9 @@ class TopoStudy():
             
             
             df_change_list_loc = pd.DataFrame(change_list_final, columns=['element_id'])
-            df_sub_id = pd.DataFrame(np.array([0,0,0,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,6,6,6,7,7,8,8,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,12,13,13,13]), columns = ['sub_id'])
+            df_sub_id = pd.DataFrame(np.array([0,0,0,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,5,6,6,6,7,7,8,8,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,12,13,13,13]), columns = ['sub_id'])
             
-            d_obs_attr = {'obs_attr': ['LO', 'LO','G','LE','LO','LO','LO','G','L','LE','LO','G','L','LE','LE','LO','LO','LO','L','LE','LE','LE','LO','L','LE','LO','LO','LO','G','L','LE','LO','LO','LE','G','LE','LE','LO','LO','L','LE','LO','L','LE','LE','L','LE','LO','L','LE','LE','LO','L','LE','LE','L']}
+            d_obs_attr = {'obs_attr': ['LO', 'LO','G','LE','LO','LO','LO','G','L','LE','LO','G','L','LE','LE','LO','LO','LO','L','LE','LE','LE','LO','L','LE','LO','LO','LO','G','G','L','LE','LO','LO','LE','G','LE','LE','LO','LO','L','LE','LO','L','LE','LE','L','LE','LO','L','LE','LE','LO','L','LE','LE','L']}
             df_obs_attr = pd.DataFrame(d_obs_attr)
             
             
@@ -162,10 +163,10 @@ class TopoStudy():
         return loc_change
     
     
-    def topo_change_check(self, TOPO_TABLE=None, location_change = None, PRINT=None):
+    def topo_change_check(self, TOPO_TABLE_INPUT=None, location_change = None, PRINT=None):
         # all_obs = ALL_OBS
         
-        TOPO_TABLE = self.topo_table()
+        TOPO_TABLE = TOPO_TABLE_INPUT
         
         df = TOPO_TABLE
         
@@ -310,7 +311,7 @@ class TopoStudy():
         return df
     
     
-    def sub_bus_nr(self, ALL_OBS_LENGTH):
+    def sub_bus_nr(self, ALL_OBS_LENGTH, Series=True):
         
         all_obs = self.obs_read()
         sub_bus_nr = []
@@ -320,8 +321,91 @@ class TopoStudy():
             for i in range(0,14):
                 sub_bus_nr_loc.append(eos.sub_topology(i))
             sub_bus_nr.append(sub_bus_nr_loc)
+            
+            series_sub_bus = [np.concatenate(sub_bus_nr_loc) for sub_bus_nr_loc in sub_bus_nr ]
+            
+        if Series==True:
+            out = series_sub_bus
+        else:
+            out = sub_bus_nr
            
-        return sub_bus_nr
+        return out
+    
+    
+    
+    """   
+    def sub_obj_dict(self):
+        
+        all_obs = self.obs_read()
+        
+        sub_obj = []
+        
+ 
+        eos = all_obs[0]
+        sub_obj_loc=[]
+        
+        for i in range(0,14):
+            sub_obj_loc.append(eos.get_obj_connect_to(substation_id = i))
+        sub_obj.append(sub_obj_loc)
+            
+        return sub_obj_loc
+    
+    
+    def sub_obj_bus(self, SUB_OBJ_DICT = None, LEN_SUB_OBJ_DICT = 0):
+        
+        if SUB_OBJ_DICT  == None:
+            pass
+        else:
+            gen = 'generators_id'
+            loa = 'loads_id'
+            lo = 'lines_or_id'
+            le = 'lines_ex_id'
+            
+            names = [le, lo, gen, loa]
+            
+            up_list=[]
+            
+
+            for i in range(LEN_SUB_OBJ_DICT):
+                
+                for key in names:
+                    if key in SUB_OBJ_DICT[i] and len(SUB_OBJ_DICT[i]) >0:
+                        up_list.extend(SUB_OBJ_DICT[i][key])
+                
+        return up_list
+    
+    
+    def sub_obj_bus(self, TOPO_TABLE = None, PATTERN_INDEX_PUT_ZERO = None):
+        if TOPO_TABLE and PATTERN_INDEX_PUT_ZERO == None:
+            pass
+        else:
+            to_t = TOPO_TABLE
+            pai = PATTERN_INDEX_PUT_ZERO
+            
+            pai_valu = list(pai.values())
+            
+            topo_list = []
+            
+            for values in pai_valu:
+                
+                for key, val_dict in pai.items():
+                    if val_dict == values:
+                        topo = key
+                    
+                    topo_list.append(key)
+            
+    """      
+            
+            
+            
+            
+            
+            
+            
+            
+        
+                    
+                    
     
     
     
@@ -390,6 +474,35 @@ class TopoStudy():
         # return per_ep_topo_change_nr, mean_topo_depth, total_topology_change, total_number_base
         return mean_topo_depth, total_topology_change, total_number_base
     
+    
+    
+class TOPO_Graph():
+    def __init__(self):
+        
+        self.b1 = np.linspace(1, 1, 100)
+        self.b2 = np.linspace(2, 2, 100)
+        
+        self.zero = np.linspace(0,10,200)
+    
+    def laying_bus(self):
+        
+        plt.figure(figsize=(5, 2.7), layout='constrained')
+        plt.plot(self.zero, self.b1, label='bus1')  # Plot some data on the (implicit) axes.
+        plt.plot(self.zero, self.b2, label='bus2')  # etc.
+        plt.axis([0,10,-2,3])
+        plt.xlabel('elements')
+        # plt.ylabel('y label')
+        plt.title("Simple Plot")
+        plt.legend()
+        
+        plt.show()
+        
+    def getting_connection(self):
+        pass
+        
+          
+                  
+    
         
         
         
@@ -407,6 +520,7 @@ if __name__ == "__main__" :
     path_to_save = os.path.join(path_name, 'save_2')
     
     a = TopoStudy(path_name, path_to_save)
+    # b = TOPO_Graph()
 #%%    
     all_obs = a.obs_read(0)
     
@@ -419,13 +533,13 @@ if __name__ == "__main__" :
     list_obs_read = a.load_list_obs()
     
     df_list_obs = a.convert_list_obs_to_DF(list_obs_read)
-    
+ #%%   
     topo_table = a.topo_table(all_obs)
     
     change_loc = a.change_loc(list_obs[0][2][0],list_obs[0][3][0])
     
-    topo_change = a.topo_change_check(location_change=change_loc)
-    
+    topo_change = a.topo_change_check(TOPO_TABLE_INPUT = topo_table, location_change=change_loc)
+ 
     per_ep_change = a.per_ep_change_check(DATAFRAME_Read_OBJ=df_list_obs )
     
     pattern = a.find_pattern(per_ep_change['changes'][0])
@@ -435,9 +549,11 @@ if __name__ == "__main__" :
         for_survived_step = a.survival_length(EPISODE_NUMBER=k)
        
         for_Survived_data.join(for_survived_step)
-
-    sub_bus_nr = a.sub_bus_nr(len(all_obs))
-     
+ #%%  
+    # sub_bus_nr = a.sub_bus_nr(len(all_obs), Series=True)
+    # sub_obj_info = a.sub_obj_dict() 
+ #%%   
+    sub_obj_w_bus = a.sub_obj_bus(sub_obj_info, len(sub_obj_info))  #the outcome is same as Topo Table...what have I think????
     
 #%% 
     # nr_topo_changes, mean_sequence_length = a.KPI(per_ep_change)
@@ -450,6 +566,36 @@ if __name__ == "__main__" :
     list_KPI = []
     list_KPI = a.KPI(per_ep_change, pattern_analysis)
     mean_sequence_length, nr_topo_change, nr_base_repetition = a.KPI(per_ep_change, pattern_analysis)
+
+#%%
+    zero = np.linspace(0,10,100)
+    x = np.linspace(1, 1, 100)  # Sample data.
+
+    #buses
+    plt.figure(figsize=(5, 2.7), layout='constrained')
+    plt.plot(zero, x, label='bus1')  # Plot some data on the (implicit) axes.
+    plt.plot(zero, x*2, label='bus2')  # etc.
+
+
+    #try connect bus1 and bus2 at x=8
+    vertical = np.linspace(0,0,100)
+    plt.plot([8,8],[1,2])
+
+
+    #try make element connected to line
+
+    plt.plot([2,2],[-1,1])
+    plt.plot([3,3],[-1,2])
+
+
+
+    plt.axis([0,10,-2,3])
+    plt.xlabel('elements')
+    # plt.ylabel('y label')
+    plt.title("Bus-Bar Graph")
+    plt.legend()
+
+    
     
     
     """

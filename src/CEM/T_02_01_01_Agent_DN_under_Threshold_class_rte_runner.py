@@ -103,7 +103,7 @@ class training():
             if terminated == True:
                 # print('terminated')
                 # gym_env.reset()
-                print(counter)
+                print(f'{counter}-- {episode_reward}')
                 counter +=1
                 e = Episode(reward=episode_reward, steps=episode_steps)
                 batch.append(e)
@@ -184,8 +184,8 @@ if __name__ == "__main__":
     N_ACTION = 157
     HIDDEN_SIZE = 300
     OBS_SIZE = 324
-    PERCENTILE = 75
-    BATCH_SIZE = 20
+    PERCENTILE = 90
+    BATCH_SIZE = 50
     counter = 0
     
     Episode = namedtuple('Episode', field_names=['reward', 'steps'])
@@ -222,17 +222,18 @@ if __name__ == "__main__":
     path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July_rte"
     
     """
-    one : prototype,
+    one : prototype, Batch_size = 40
+    two : rte with parameter, batch_size 50, percentil 90 --> top 5 ep will be filtered
 
     """
     
     
-    path_1 = os.path.join(path_name, 'one')
-    path_2 = os.path.join(path_name, 'one_entire')
+    path_1 = os.path.join(path_name, 'two')
+    path_2 = os.path.join(path_name, 'two_entire')
     
-    path_to_save = os.path.join(path_name, 'save_1')
+    path_to_save = os.path.join(path_name, 'save_2')
     
-    writer = SummaryWriter(comment="-Agent_1")
+    writer = SummaryWriter(comment="-Agent_2_rte")
 
     trainend = True
 

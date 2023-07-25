@@ -81,7 +81,7 @@ class training():
             
             rd_rate = np.random.random()
             
-            if rd_rate <= 0.97:
+            if rd_rate <= 0.98:
             
                 high_act_probs_v_loc = act_probs_v.argmax()
                 # act_arr = np.array([act_probs,1-act_probs])
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     HIDDEN_SIZE = 300
     OBS_SIZE = 328
     PERCENTILE = 75
-    BATCH_SIZE = 20
+    BATCH_SIZE = 50
     counter = 0
     
     Episode = namedtuple('Episode', field_names=['reward', 'steps'])
@@ -247,7 +247,7 @@ if __name__ == "__main__":
             Maybe just disabling Thermal Limit????
             
             
-    Five : same as four, with Random action , env is just regular l2rpn_sandbox not using parameter nor thermal limit
+    Five : same as four, with Random action , env is just regular l2rpn_sandbox not using parameter nor thermal limit, change BATCH_SIZE from 20 to 50
 
     """
     
@@ -259,7 +259,7 @@ if __name__ == "__main__":
     
     writer = SummaryWriter(comment="-Agent_5")
 
-    trainend = True
+    trainend = False
 
     if trainend == False:
 
@@ -328,7 +328,8 @@ if __name__ == "__main__":
             msg_tmp += "\t\t - number of time steps completed: {:.0f} / {:.0f}".format(nb_time_step, max_ts)
             print(msg_tmp)
             
-            
+            # tensorboard for five:   tensorboard dev upload --logdir "C:\Users\thoug\OneDrive\SS2023\Internship\04_Code\CEM_Agent_G2OP\src\CEM\runs\Jul25_04-25-39_BOOK-5K4M42628E-Agent_5"
+
         #%%  incase for DN Agent comparasion
 
         from grid2op.Agent import DoNothingAgent

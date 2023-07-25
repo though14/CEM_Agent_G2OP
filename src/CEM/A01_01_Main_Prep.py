@@ -90,20 +90,20 @@ th_lim = np.array(thermal_limit)
 #after setting all the parameter, we make the environment
 env_out_rte = grid2op.make(env_name_rte, 
                    param=p,
-                   action_class = TopologyChangeAndDispatchAction,
+                   action_class = TopologyAction,
                    reward_class = L2RPNReward)
 
-env_out_rte.set_thermal_limit(th_lim)
+# env_out_rte.set_thermal_limit(th_lim)
 
 env_out_rte
 
 
 env_out_rte_test = grid2op.make(env_name_rte_test, 
                    param=p,
-                   action_class = TopologyChangeAndDispatchAction,
+                   action_class = TopologyAction,
                    reward_class = L2RPNReward)
 
-env_out_rte_test.set_thermal_limit(th_lim)
+# env_out_rte_test.set_thermal_limit(th_lim)
 
 env_out_rte_test
 

@@ -20,6 +20,8 @@ from tqdm import tqdm
 from A01_01_Main_Prep import env_sandbox as env_out
 from A01_01_Main_Prep import env_sandbox_test as env_test
 from A01_01_Main_Prep import env_sandbox_test_no_p as env_sand_test
+from A01_01_Main_Prep import env_out_rte_test as env_rte_test
+from A01_01_Main_Prep import p
 
 
 class TopoStudy():
@@ -207,9 +209,11 @@ class TopoStudy():
     
     
     
-    def per_ep_change_check(self, DATAFRAME_Read_OBJ= None,  HOW_MANY_CHRONICS=1000 ):
+    def per_ep_change_check(self, DATAFRAME_Read_OBJ= None, TOPO_TABLE=None,  HOW_MANY_CHRONICS=1000 ):
         
         df_ro = DATAFRAME_Read_OBJ
+        
+        topo_table = TOPO_TABLE
         
         # df_init = pd.DataFrame()
         all_per_ep_change = pd.DataFrame()
@@ -227,7 +231,7 @@ class TopoStudy():
             for q in range(len(df_ro_local)):
                 local_loc_change = self.change_loc(df_ro_local.loc[q]['before'][0], df_ro_local.loc[q]['after'][0])
                 
-                local_topo_change = self.topo_change_check(location_change=local_loc_change)
+                local_topo_change = self.topo_change_check(TOPO_TABLE_INPUT=topo_table,location_change=local_loc_change)
                 local_topo_change = local_topo_change.reset_index(drop=True)
                 
                 # change_local = [local_topo_change]
@@ -333,7 +337,7 @@ class TopoStudy():
     
     
     
-    """   
+
     def sub_obj_dict(self):
         
         all_obs = self.obs_read()
@@ -375,26 +379,26 @@ class TopoStudy():
         return up_list
     
     
-    def sub_obj_bus(self, TOPO_TABLE = None, PATTERN_INDEX_PUT_ZERO = None):
-        if TOPO_TABLE and PATTERN_INDEX_PUT_ZERO == None:
-            pass
-        else:
-            to_t = TOPO_TABLE
-            pai = PATTERN_INDEX_PUT_ZERO
+    # def sub_obj_bus(self, TOPO_TABLE = None, PATTERN_INDEX_PUT_ZERO = None):
+    #     if TOPO_TABLE and PATTERN_INDEX_PUT_ZERO == None:
+    #         pass
+    #     else:
+    #         to_t = TOPO_TABLE
+    #         pai = PATTERN_INDEX_PUT_ZERO
             
-            pai_valu = list(pai.values())
+    #         pai_valu = list(pai.values())
             
-            topo_list = []
+    #         topo_list = []
             
-            for values in pai_valu:
+    #         for values in pai_valu:
                 
-                for key, val_dict in pai.items():
-                    if val_dict == values:
-                        topo = key
+    #             for key, val_dict in pai.items():
+    #                 if val_dict == values:
+    #                     topo = key
                     
-                    topo_list.append(key)
+    #                 topo_list.append(key)
             
-    """      
+
             
             
             
@@ -501,7 +505,11 @@ class TOPO_Graph():
         pass
         
           
-                  
+class EPD(EpisodeData):
+    def __init__(self):
+        super().__init__()
+        self.action_space = TopologyAction
+        self.params = p                  
     
         
         
@@ -521,6 +529,7 @@ if __name__ == "__main__" :
     
     a = TopoStudy(path_name, path_to_save)
     # b = TOPO_Graph()
+    c = EPD()
 #%%    
     all_obs = a.obs_read(0)
     
@@ -540,7 +549,7 @@ if __name__ == "__main__" :
     
     topo_change = a.topo_change_check(TOPO_TABLE_INPUT = topo_table, location_change=change_loc)
  
-    per_ep_change = a.per_ep_change_check(DATAFRAME_Read_OBJ=df_list_obs )
+    per_ep_change = a.per_ep_change_check(DATAFRAME_Read_OBJ=df_list_obs, TOPO_TABLE = topo_table, HOW_MANY_CHRONICS=2 )
     
     pattern = a.find_pattern(per_ep_change['changes'][0])
     
@@ -550,8 +559,8 @@ if __name__ == "__main__" :
        
         for_Survived_data.join(for_survived_step)
  #%%  
-    # sub_bus_nr = a.sub_bus_nr(len(all_obs), Series=True)
-    # sub_obj_info = a.sub_obj_dict() 
+    sub_bus_nr = a.sub_bus_nr(len(all_obs), Series=False)
+    sub_obj_info = a.sub_obj_dict() 
  #%%   
     sub_obj_w_bus = a.sub_obj_bus(sub_obj_info, len(sub_obj_info))  #the outcome is same as Topo Table...what have I think????
     

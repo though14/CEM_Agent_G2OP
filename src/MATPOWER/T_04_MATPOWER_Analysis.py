@@ -7,15 +7,30 @@ Created on Tue Jul 11 23:37:41 2023
 import numpy as np
 import mat73
 import pandas as pd
+import scipy.io as sio
 
 
 data_dict = mat73.loadmat('case14realistic_514_top.mat')
+
+shorten_dict = sio.loadmat('BR_STATUS_Relevant.mat')
 
 
 Topo = data_dict['BR_STATUS']
 Topo = np.absolute(Topo)
 Topo = np.transpose(Topo)
 Topo = np.where(Topo<0.5, 0,1)
+
+
+w_TOPO = shorten_dict['BR_STATUS_Relavant_w_BBDC']
+w_TOPO = np.absolute(w_TOPO)
+w_TOPO = np.transpose(w_TOPO)
+w_TOPO = np.where(w_TOPO<0.5, 0,1)
+
+
+wo_TOPO = shorten_dict['BR_STATUS_Relavant_wo_BBDC_right_load']
+wo_TOPO = np.absolute(wo_TOPO)
+wo_TOPO = np.transpose(wo_TOPO)
+wo_TOPO = np.where(wo_TOPO<0.5, 0,1)
 
 
 # def count_pattern_occurrences(patterns):
@@ -132,6 +147,11 @@ Pattern = analyze_pattern(Topo)
 pattern_to_topology = {value: key for key, value in Pattern[0].items()}
 pattern_to_topology = pd.DataFrame.from_dict(pattern_to_topology, orient='index')
 pattern_to_topology[0].str.replace('\W','')
+
+
+w_Pattern = analyze_pattern(w_TOPO)
+wo_Pattern = analyze_pattern(wo_TOPO)
+
 
 rep = Pattern[1]
 rep_df = pd.DataFrame.from_dict(rep, orient='index')

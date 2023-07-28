@@ -184,8 +184,8 @@ if __name__ == "__main__":
     N_ACTION = 157
     HIDDEN_SIZE = 300
     OBS_SIZE = 324
-    PERCENTILE = 90
-    BATCH_SIZE = 50
+    PERCENTILE = 95
+    BATCH_SIZE = 100
     counter = 0
     
     Episode = namedtuple('Episode', field_names=['reward', 'steps'])
@@ -212,7 +212,7 @@ if __name__ == "__main__":
     
     net = train_CEM(OBS_SIZE, HIDDEN_SIZE, n_actions)
 
-    t = training(gym_env, net, BATCH_SIZE)
+    t = training(gym_env, net, BATCH_SIZE, PERCENTILE)
     
     
     
@@ -224,18 +224,19 @@ if __name__ == "__main__":
     """
     one : prototype, Batch_size = 40
     two : rte with parameter, batch_size 50, percentil 90 --> top 5 ep will be filtered
+    Three : same as two, but we will make it run longer and longer --> 100Batch with 95% Percentile???
 
     """
     
     
-    path_1 = os.path.join(path_name, 'two')
-    path_2 = os.path.join(path_name, 'two_entire')
+    path_1 = os.path.join(path_name, 'three')
+    path_2 = os.path.join(path_name, 'three_entire')
     
-    path_to_save = os.path.join(path_name, 'save_2')
+    path_to_save = os.path.join(path_name, 'save_3')
     
-    writer = SummaryWriter(comment="-Agent_2_rte")
+    writer = SummaryWriter(comment="-Agent_3_rte")
 
-    trainend = True
+    trainend = False
 
     if trainend == False:
 
@@ -251,7 +252,8 @@ if __name__ == "__main__":
             writer.add_scalar("loss", loss_v.item(), iter_no)
             writer.add_scalar("reward_bound", reward_b, iter_no)
             writer.add_scalar("reward_mean", reward_m, iter_no)
-            if loss_v.item() < 0.0001:
+            # if loss_v.item() < 0.0001:
+            if reward_m > 30000:
                 print("Solved!")
                 
                 torch.save(net.state_dict(), path_1)
@@ -276,7 +278,7 @@ if __name__ == "__main__":
         # env = grid2op.make('l2rpn_2019_test')
         # env_test = grid2op.make('l2rpn_2019_test')
         
-        env_test = env_test
+        env_test = env_test 
         
         from grid2op.Runner import Runner
         from grid2op.Reward import L2RPNReward

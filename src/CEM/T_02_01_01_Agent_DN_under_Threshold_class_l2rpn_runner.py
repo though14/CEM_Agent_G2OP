@@ -104,7 +104,7 @@ class training():
             if terminated == True:
                 # print('terminated')
                 gym_env.reset()
-                print(counter)
+                print(f'{counter}-- {episode_reward}')
                 counter +=1
                 e = Episode(reward=episode_reward, steps=episode_steps)
                 batch.append(e)
@@ -188,8 +188,8 @@ if __name__ == "__main__":
     N_ACTION = 157
     HIDDEN_SIZE = 300
     OBS_SIZE = 324
-    PERCENTILE = 75
-    BATCH_SIZE = 20
+    PERCENTILE = 90
+    BATCH_SIZE = 50
     counter = 0
     
     Episode = namedtuple('Episode', field_names=['reward', 'steps'])
@@ -216,7 +216,7 @@ if __name__ == "__main__":
     
     net = train_CEM(OBS_SIZE, HIDDEN_SIZE, n_actions)
 
-    t = training(gym_env, net, BATCH_SIZE)
+    t = training(gym_env, net, BATCH_SIZE, PERCENTILE)
     
     
     
@@ -229,18 +229,20 @@ if __name__ == "__main__":
     one : prototype,
     two : l2rpn environment changed into Topology action only
     Three: with parameter on substation max and cool down
+    
+    Four : with bigger batch and Percentile
 
     """
     
     
-    path_1 = os.path.join(path_name, 'three')
-    path_2 = os.path.join(path_name, 'three_entire')
+    path_1 = os.path.join(path_name, 'four')
+    path_2 = os.path.join(path_name, 'four_entire')
     
-    path_to_save = os.path.join(path_name, 'save_3')
+    path_to_save = os.path.join(path_name, 'save_4')
     
-    writer = SummaryWriter(comment="-Agent_3")
+    writer = SummaryWriter(comment="-Agent_4_l2rpn")
 
-    trainend = False
+    trainend = True
 
     if trainend == False:
 
@@ -286,7 +288,7 @@ if __name__ == "__main__":
         # env_test = grid2op.make('l2rpn_2019_test')
         
         env_test = env_test
-        env_test = grid2op.make('l2rpn_2019_test')
+        # env_test = grid2op.make('l2rpn_2019_test')
         
         from grid2op.Runner import Runner
         from grid2op.Reward import L2RPNReward
@@ -297,7 +299,7 @@ if __name__ == "__main__":
                 agentInstance=my_agent
                 )
         res = runner.run(path_save=path_to_save,
-                          nb_episode=10, 
+                          nb_episode=20, 
                           # episode_id =[274],
                           nb_process=1,
                           pbar=True)

@@ -11,6 +11,7 @@ from grid2op.Episode import EpisodeData
 import plotly.graph_objects as go
 import plotly.io as pio
 import matplotlib.pyplot as plt
+from grid2op.Action import TopologyAction,  TopologyChangeAndDispatchAction
 
 import numpy as np
 import pandas as pd
@@ -505,11 +506,11 @@ class TOPO_Graph():
         pass
         
           
-class EPD(EpisodeData):
-    def __init__(self):
-        super().__init__()
-        self.action_space = TopologyAction
-        self.params = p                  
+# class EPD(EpisodeData):
+#     def __init__(self):
+#         super().__init__()
+#         self.action_space = TopologyAction
+#         self.params = p                  
     
         
         
@@ -524,12 +525,12 @@ if __name__ == "__main__" :
     env = grid2op.make('l2rpn_case14_sandbox_test')
     env_sand_test
     
-    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July_Sandbox"
-    path_to_save = os.path.join(path_name, 'save_2')
+    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July"
+    path_to_save = os.path.join(path_name, 'save_4')
     
     a = TopoStudy(path_name, path_to_save)
     # b = TOPO_Graph()
-    c = EPD()
+    # c = EPD()
 #%%    
     all_obs = a.obs_read(0)
     
@@ -549,12 +550,12 @@ if __name__ == "__main__" :
     
     topo_change = a.topo_change_check(TOPO_TABLE_INPUT = topo_table, location_change=change_loc)
  
-    per_ep_change = a.per_ep_change_check(DATAFRAME_Read_OBJ=df_list_obs, TOPO_TABLE = topo_table, HOW_MANY_CHRONICS=2 )
+    per_ep_change = a.per_ep_change_check(DATAFRAME_Read_OBJ=df_list_obs, TOPO_TABLE = topo_table, HOW_MANY_CHRONICS=10 )
     
     pattern = a.find_pattern(per_ep_change['changes'][0])
     
     for_Survived_data = pd.DataFrame()
-    for k in range(0,2):
+    for k in range(0,9):
         for_survived_step = a.survival_length(EPISODE_NUMBER=k)
        
         for_Survived_data.join(for_survived_step)

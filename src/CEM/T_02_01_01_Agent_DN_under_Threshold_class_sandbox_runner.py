@@ -252,7 +252,7 @@ if __name__ == "__main__":
     
     writer = SummaryWriter(comment="-Agent_6_sand")
 
-    trainend = False
+    trainend = True
 
     if trainend == False:
 

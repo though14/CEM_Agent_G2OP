@@ -1,0 +1,437 @@
+{
+    "_PATH_ENV": null,
+    "_init_subtype": "grid2op.Observation.completeObservation.CompleteObservation",
+    "alarms_area_lines": [],
+    "alarms_area_names": [],
+    "alarms_lines_area": {},
+    "dim_alarms": 0,
+    "env_name": "l2rpn_2019_test",
+    "gen_cost_per_MW": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        10.0
+    ],
+    "gen_max_ramp_down": [
+        50.0,
+        80.0,
+        120.0,
+        120.0,
+        190.0
+    ],
+    "gen_max_ramp_up": [
+        50.0,
+        80.0,
+        120.0,
+        120.0,
+        190.0
+    ],
+    "gen_min_downtime": [
+        0,
+        1,
+        0,
+        0,
+        0
+    ],
+    "gen_min_uptime": [
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "gen_pmax": [
+        50.0,
+        80.0,
+        120.0,
+        120.0,
+        190.0
+    ],
+    "gen_pmin": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ],
+    "gen_pos_topo_vect": [
+        7,
+        11,
+        28,
+        34,
+        2
+    ],
+    "gen_redispatchable": [
+        false,
+        true,
+        true,
+        true,
+        true
+    ],
+    "gen_renewable": [
+        true,
+        false,
+        false,
+        false,
+        false
+    ],
+    "gen_shutdown_cost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ],
+    "gen_startup_cost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ],
+    "gen_to_sub_pos": [
+        4,
+        2,
+        4,
+        1,
+        2
+    ],
+    "gen_to_subid": [
+        1,
+        2,
+        5,
+        7,
+        0
+    ],
+    "gen_type": [
+        "solar",
+        "nuclear",
+        "nuclear",
+        "nuclear",
+        "thermal"
+    ],
+    "glop_version": "1.8.1",
+    "grid_layout": {
+        "sub_0": [
+            -280.0,
+            -81.0
+        ],
+        "sub_1": [
+            -100.0,
+            -270.0
+        ],
+        "sub_10": [
+            79.0,
+            162.0
+        ],
+        "sub_11": [
+            -170.0,
+            270.0
+        ],
+        "sub_12": [
+            -64.0,
+            270.0
+        ],
+        "sub_13": [
+            222.0,
+            216.0
+        ],
+        "sub_2": [
+            366.0,
+            -270.0
+        ],
+        "sub_3": [
+            366.0,
+            -54.0
+        ],
+        "sub_4": [
+            -64.0,
+            -54.0
+        ],
+        "sub_5": [
+            -64.0,
+            54.0
+        ],
+        "sub_6": [
+            450.0,
+            0.0
+        ],
+        "sub_7": [
+            550.0,
+            0.0
+        ],
+        "sub_8": [
+            326.0,
+            54.0
+        ],
+        "sub_9": [
+            222.0,
+            108.0
+        ]
+    },
+    "line_ex_pos_topo_vect": [
+        3,
+        19,
+        9,
+        13,
+        20,
+        14,
+        21,
+        30,
+        35,
+        24,
+        49,
+        46,
+        43,
+        33,
+        36,
+        53,
+        40,
+        44,
+        50,
+        54
+    ],
+    "line_ex_to_sub_pos": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1
+    ],
+    "line_ex_to_subid": [
+        1,
+        4,
+        2,
+        3,
+        4,
+        3,
+        4,
+        6,
+        8,
+        5,
+        12,
+        11,
+        10,
+        7,
+        8,
+        13,
+        9,
+        10,
+        12,
+        13
+    ],
+    "line_or_pos_topo_vect": [
+        0,
+        1,
+        4,
+        5,
+        6,
+        10,
+        15,
+        16,
+        17,
+        22,
+        25,
+        26,
+        27,
+        31,
+        32,
+        37,
+        38,
+        41,
+        47,
+        51
+    ],
+    "line_or_to_sub_pos": [
+        0,
+        1,
+        1,
+        2,
+        3,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        2,
+        3,
+        1,
+        2,
+        2,
+        3,
+        1,
+        1,
+        2
+    ],
+    "line_or_to_subid": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        2,
+        3,
+        3,
+        3,
+        4,
+        5,
+        5,
+        5,
+        6,
+        6,
+        8,
+        8,
+        9,
+        11,
+        12
+    ],
+    "load_pos_topo_vect": [
+        8,
+        12,
+        18,
+        23,
+        29,
+        39,
+        42,
+        45,
+        48,
+        52,
+        55
+    ],
+    "load_to_sub_pos": [
+        5,
+        3,
+        5,
+        4,
+        5,
+        4,
+        2,
+        2,
+        2,
+        3,
+        2
+    ],
+    "load_to_subid": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+    ],
+    "name_gen": [
+        "gen_1_0",
+        "gen_2_1",
+        "gen_5_2",
+        "gen_7_3",
+        "gen_0_4"
+    ],
+    "name_line": [
+        "0_1_0",
+        "0_4_1",
+        "1_2_2",
+        "1_3_3",
+        "1_4_4",
+        "2_3_5",
+        "3_4_6",
+        "3_6_7",
+        "3_8_8",
+        "4_5_9",
+        "5_12_10",
+        "5_11_11",
+        "5_10_12",
+        "6_7_13",
+        "6_8_14",
+        "8_13_15",
+        "8_9_16",
+        "9_10_17",
+        "11_12_18",
+        "12_13_19"
+    ],
+    "name_load": [
+        "load_1_0",
+        "load_2_1",
+        "load_3_2",
+        "load_4_3",
+        "load_5_4",
+        "load_8_5",
+        "load_9_6",
+        "load_10_7",
+        "load_11_8",
+        "load_12_9",
+        "load_13_10"
+    ],
+    "name_shunt": [
+        "shunt_8_0"
+    ],
+    "name_storage": [],
+    "name_sub": [
+        "sub_0",
+        "sub_1",
+        "sub_2",
+        "sub_3",
+        "sub_4",
+        "sub_5",
+        "sub_6",
+        "sub_7",
+        "sub_8",
+        "sub_9",
+        "sub_10",
+        "sub_11",
+        "sub_12",
+        "sub_13"
+    ],
+    "shunt_to_subid": [
+        8
+    ],
+    "storage_Emax": [],
+    "storage_Emin": [],
+    "storage_charging_efficiency": [],
+    "storage_discharging_efficiency": [],
+    "storage_loss": [],
+    "storage_marginal_cost": [],
+    "storage_max_p_absorb": [],
+    "storage_max_p_prod": [],
+    "storage_pos_topo_vect": [],
+    "storage_to_sub_pos": [],
+    "storage_to_subid": [],
+    "storage_type": [],
+    "sub_info": [
+        3,
+        6,
+        4,
+        6,
+        5,
+        6,
+        3,
+        2,
+        5,
+        3,
+        3,
+        3,
+        4,
+        3
+    ]
+}

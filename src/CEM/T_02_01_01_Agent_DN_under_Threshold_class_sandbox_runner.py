@@ -108,7 +108,7 @@ class training():
                     
                 
                     
-                print(counter)
+                print(f'{counter}-- {episode_reward}')
                 counter +=1
                 e = Episode(reward=episode_reward, steps=episode_steps)
                 batch.append(e)
@@ -193,8 +193,8 @@ if __name__ == "__main__":
     N_ACTION = 157
     HIDDEN_SIZE = 300
     OBS_SIZE = 328
-    PERCENTILE = 75
-    BATCH_SIZE = 20
+    PERCENTILE = 90
+    BATCH_SIZE = 50
     counter = 0
     
     Episode = namedtuple('Episode', field_names=['reward', 'steps'])
@@ -222,7 +222,7 @@ if __name__ == "__main__":
     
     net = train_CEM(OBS_SIZE, HIDDEN_SIZE, n_actions)
 
-    t = training(gym_env, net, BATCH_SIZE)
+    t = training(gym_env, net, BATCH_SIZE, PERCENTILE)
     
     
     
@@ -239,16 +239,18 @@ if __name__ == "__main__":
             Maybe just disabling Thermal Limit????
             
     Five : used by RANDOM, but outcome isn't so good. I think CEM is not made for expedition
+    
+    Six: No Random. Bigger Batch, same filter top 5 ep.
 
     """
     
     
-    path_1 = os.path.join(path_name, 'four')
-    path_2 = os.path.join(path_name, 'four_entire')
+    path_1 = os.path.join(path_name, 'six')
+    path_2 = os.path.join(path_name, 'six_entire')
     
-    path_to_save = os.path.join(path_name, 'save_4')
+    path_to_save = os.path.join(path_name, 'save_6')
     
-    writer = SummaryWriter(comment="-Agent_4")
+    writer = SummaryWriter(comment="-Agent_6_sand")
 
     trainend = False
 

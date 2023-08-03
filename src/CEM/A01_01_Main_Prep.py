@@ -134,7 +134,7 @@ env_sandbox = grid2op.make(env_name_sandbox,
                    action_class = TopologyAction,
                    reward_class = L2RPNReward)
 
-env_sandbox.set_thermal_limit(th_lim)
+# env_sandbox.set_thermal_limit(th_lim)
 
 env_sandbox
 
@@ -144,7 +144,7 @@ env_sandbox_test = grid2op.make(env_name_sandbox_test,
                    action_class = TopologyAction,
                    reward_class = L2RPNReward)
 
-env_sandbox_test.set_thermal_limit(th_lim)
+# env_sandbox_test.set_thermal_limit(th_lim)
 
 env_sandbox_test
 

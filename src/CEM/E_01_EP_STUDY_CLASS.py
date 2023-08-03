@@ -401,16 +401,7 @@ class TopoStudy():
             
 
             
-            
-            
-            
-            
-            
-            
-            
-        
-                    
-                    
+    
     
     
     
@@ -562,10 +553,10 @@ if __name__ == "__main__" :
  #%%  
     sub_bus_nr = a.sub_bus_nr(len(all_obs), Series=False)
     sub_obj_info = a.sub_obj_dict() 
- #%%   
+  
     sub_obj_w_bus = a.sub_obj_bus(sub_obj_info, len(sub_obj_info))  #the outcome is same as Topo Table...what have I think????
     
-#%% 
+
     # nr_topo_changes, mean_sequence_length = a.KPI(per_ep_change)
     
     all_topo_list = a.all_topology(all_obs)

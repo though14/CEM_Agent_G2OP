@@ -193,8 +193,8 @@ if __name__ == "__main__":
     N_ACTION = 157
     HIDDEN_SIZE = 300
     OBS_SIZE = 328
-    PERCENTILE = 90
-    BATCH_SIZE = 50
+    PERCENTILE = 95
+    BATCH_SIZE = 100
     counter = 0
     
     Episode = namedtuple('Episode', field_names=['reward', 'steps'])
@@ -241,18 +241,20 @@ if __name__ == "__main__":
     Five : used by RANDOM, but outcome isn't so good. I think CEM is not made for expedition
     
     Six: No Random. Bigger Batch, same filter top 5 ep.
+    
+    Seven : same as Six, 100 Batch, filter top 5 ep
 
     """
     
     
-    path_1 = os.path.join(path_name, 'six')
-    path_2 = os.path.join(path_name, 'six_entire')
+    path_1 = os.path.join(path_name, 'seven')
+    path_2 = os.path.join(path_name, 'seven_entire')
     
-    path_to_save = os.path.join(path_name, 'save_6')
+    path_to_save = os.path.join(path_name, 'save_7')
     
-    writer = SummaryWriter(comment="-Agent_6_sand")
+    writer = SummaryWriter(comment="-Agent_7_sand")
 
-    trainend = True
+    trainend = False
 
     if trainend == False:
 

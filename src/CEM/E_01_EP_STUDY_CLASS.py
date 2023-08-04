@@ -454,9 +454,9 @@ class TopoStudy():
         
         mean_topo_depth=[]  #it maybe actually mean sequence length
         
-        for i in range(self.ep_length):
+        for i in range(len(per_ep_topo_change_nr)):
             sum_depth = per_ep_change.loc[per_ep_change['ep_num'] == i, 'local_depth'].sum()
-            loc_mean_topo_depth=sum_depth/per_ep_topo_change_nr[i]
+            loc_mean_topo_depth=sum_depth/per_ep_topo_change_nr.iloc[i]
             mean_topo_depth.append(loc_mean_topo_depth)
             
         mean_topo_depth
@@ -546,7 +546,7 @@ if __name__ == "__main__" :
     pattern = a.find_pattern(per_ep_change['changes'][0])
     
     for_Survived_data = pd.DataFrame()
-    for k in range(0,9):
+    for k in range(0,10):
         for_survived_step = a.survival_length(EPISODE_NUMBER=k)
        
         for_Survived_data.join(for_survived_step)
@@ -562,7 +562,7 @@ if __name__ == "__main__" :
     all_topo_list = a.all_topology(all_obs)
     
     pattern_analysis = a.analyze_pattern(all_topo_list.to_numpy())
-    
+ #%%  
     
     list_KPI = []
     list_KPI = a.KPI(per_ep_change, pattern_analysis)

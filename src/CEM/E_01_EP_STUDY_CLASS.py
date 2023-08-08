@@ -516,14 +516,17 @@ if __name__ == "__main__" :
     env = grid2op.make('l2rpn_case14_sandbox_test')
     env_sand_test
     
-    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July"
-    path_to_save = os.path.join(path_name, 'save_4')
+    # path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July"
+    # path_to_save = os.path.join(path_name, 'save_4')   #for l2rpn2019
+    
+    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July_rte"
+    path_to_save = os.path.join(path_name, 'save_2')
     
     a = TopoStudy(path_name, path_to_save)
     # b = TOPO_Graph()
     # c = EPD()
 #%%    
-    all_obs = a.obs_read(0)
+    all_obs = a.obs_read(1) #changing this will make pattern Analysis see the different EP for pattern
     
     list_obs = a.list_obs()
     
@@ -546,7 +549,7 @@ if __name__ == "__main__" :
     pattern = a.find_pattern(per_ep_change['changes'][0])
     
     for_Survived_data = pd.DataFrame()
-    for k in range(0,10):
+    for k in range(0,2):
         for_survived_step = a.survival_length(EPISODE_NUMBER=k)
        
         for_Survived_data.join(for_survived_step)

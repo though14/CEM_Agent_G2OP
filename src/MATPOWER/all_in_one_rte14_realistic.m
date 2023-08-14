@@ -1,4 +1,18 @@
 %STARTUP
+% BR_STATUS(:,~any(isnan(BR_STATUS),1)) to find topology Branch info
+% that has converged
+% any(isnan(BR_STATUS),1)  to find topology Branch info that doesn't
+% converged
+% matchingRows = find(ans == 1, 1, 'first')
+% to find first row that has not converged 
+
+
+% A = (1:211).';
+%Linear_indices= sub
+%idx=ismember(1:numel(A),Linear_indices); % idx is logical indices
+%A(idx) = 0
+
+
 
 %% add MATPOWER paths
 addpath( ...

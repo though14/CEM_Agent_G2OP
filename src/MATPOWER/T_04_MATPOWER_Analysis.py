@@ -10,9 +10,9 @@ import pandas as pd
 import scipy.io as sio
 
 
-data_dict = mat73.loadmat('case14realistic_514_top.mat')
+data_dict = mat73.loadmat('20230808_134002_case14realistic_197_rd.mat')
 
-shorten_dict = sio.loadmat('BR_STATUS_Relevant.mat')
+shorten_dict = sio.loadmat('BR_STATUS_Relevant_r14_197.mat')
 
 
 Topo = data_dict['BR_STATUS']
@@ -21,16 +21,38 @@ Topo = np.transpose(Topo)
 Topo = np.where(Topo<0.5, 0,1)
 
 
-w_TOPO = shorten_dict['BR_STATUS_Relavant_w_BBDC']
+# w_TOPO = shorten_dict['BR_STATUS_Relavant_w_BBDC']
+# w_TOPO = np.absolute(w_TOPO)
+# w_TOPO = np.transpose(w_TOPO)
+# w_TOPO = np.where(w_TOPO<0.5, 0,1)
+
+w_TOPO = shorten_dict['BR_STATUS_Work']
 w_TOPO = np.absolute(w_TOPO)
 w_TOPO = np.transpose(w_TOPO)
-w_TOPO = np.where(w_TOPO<0.5, 0,1)
+# w_TOPO = np.where(w_TOPO<0.5, 0,1)
+w_TOPO = np.where(np.isnan(w_TOPO), -1, np.where(w_TOPO < 0.5, 0, 1))
 
 
-wo_TOPO = shorten_dict['BR_STATUS_Relavant_wo_BBDC_right_load']
-wo_TOPO = np.absolute(wo_TOPO)
-wo_TOPO = np.transpose(wo_TOPO)
-wo_TOPO = np.where(wo_TOPO<0.5, 0,1)
+#in case -1 (NAN = not converged) happen
+if np.where(w_TOPO == -1)[0] is not None:
+    index = np.where(w_TOPO == -1)[0]
+    if index.size > 0:
+        w_TOPO = w_TOPO[:index[0] + 1]
+    
+
+w_TOPO
+
+
+
+
+
+# wo_TOPO = shorten_dict['BR_STATUS_Relavant_wo_BBDC_right_load']
+# wo_TOPO = np.absolute(wo_TOPO)
+# wo_TOPO = np.transpose(wo_TOPO)
+# wo_TOPO = np.where(wo_TOPO<0.5, 0,1)
+
+
+
 
 
 # def count_pattern_occurrences(patterns):
@@ -149,8 +171,8 @@ pattern_to_topology = pd.DataFrame.from_dict(pattern_to_topology, orient='index'
 pattern_to_topology[0].str.replace('\W','')
 
 
-w_Pattern = analyze_pattern(w_TOPO)
-wo_Pattern = analyze_pattern(wo_TOPO)
+Pattern_pre_processed = analyze_pattern(w_TOPO)
+# wo_Pattern = analyze_pattern(wo_TOPO)
 
 
 rep = Pattern[1]

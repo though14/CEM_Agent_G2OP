@@ -20,9 +20,8 @@ import torch.optim as optim
 import numpy as np
 
 from grid2op.gym_compat import GymEnv
-from A01_01_Main_Prep import env_out_l2rpn as env_out
-from A01_01_Main_Prep import env_out_l2rpn_test as env_test
-from A01_01_Main_Prep import env_sandbox_test as env_sand_test
+from A01_01_Main_Prep import env_out_rte as env_out
+from A01_01_Main_Prep import env_out_rte_test as env_test
 from gym import Env
 from gym.utils.env_checker import check_env
 from grid2op.gym_compat import DiscreteActSpace, GymActionSpace
@@ -78,9 +77,18 @@ class training():
             act_probs_v = sm(self.net(obs_v))
             act_probs = act_probs_v.data.numpy()[0]
             
-            high_act_probs_v_loc = act_probs_v.argmax()
-            # act_arr = np.array([act_probs,1-act_probs])
-            action = high_act_probs_v_loc.item() # Converte the action number directly
+            
+            rd_rate = np.random.random()
+            
+            if rd_rate <= 5.0:
+            
+                # high_act_probs_v_loc = act_probs_v.argmax()
+                # act_arr = np.array([act_probs,1-act_probs])
+                # action = high_act_probs_v_loc.item() # Converte the action number directly
+                action = np.random.choice(len(act_probs), p=act_probs)
+                
+            else:
+                action = np.random.randint(n_actions)
             
             # action_to_outside = action
             # yield action_to_outside
@@ -103,7 +111,7 @@ class training():
             
             if terminated == True:
                 # print('terminated')
-                gym_env.reset()
+                # gym_env.reset()
                 print(f'{counter}-- {episode_reward}')
                 counter +=1
                 e = Episode(reward=episode_reward, steps=episode_steps)
@@ -138,8 +146,7 @@ class training():
         train_obs_v = torch.FloatTensor(train_obs)
         train_act_v = torch.LongTensor(train_act)
         return train_obs_v, train_act_v, reward_bound, reward_mean
-    
-    
+
 from grid2op.Agent import BaseAgent
 
 class AgentFromGym(BaseAgent):
@@ -160,7 +167,6 @@ class AgentFromGym(BaseAgent):
             gym_obs_v = torch.FloatTensor([gym_obs])
         else:
             gym_obs_v = torch.FloatTensor([gym_env.observation_space.to_gym(gym_obs)])
-            # gym_obs_v = torch.FloatTensor([gym_obs.to_vect()])
             
         agent_act_probs_v = self.sm(self.neural_network(gym_obs_v))
         agent_act_probs = agent_act_probs_v.data.numpy()[0]
@@ -179,8 +185,7 @@ class AgentFromGym(BaseAgent):
         
         # gym_act = self.action_from_CEM
         # grid2op_act = self.gym_env.action_space.from_gym(gym_act)
-        return grid2op_act
-    
+        return grid2op_act    
 
 
 if __name__ == "__main__":
@@ -188,8 +193,8 @@ if __name__ == "__main__":
     N_ACTION = 157
     HIDDEN_SIZE = 300
     OBS_SIZE = 324
-    PERCENTILE = 90
-    BATCH_SIZE = 50
+    PERCENTILE = 95
+    BATCH_SIZE = 100
     counter = 0
     
     Episode = namedtuple('Episode', field_names=['reward', 'steps'])
@@ -223,27 +228,26 @@ if __name__ == "__main__":
     objective = nn.CrossEntropyLoss()
     optimizer = optim.Adam(params=net.parameters(), lr=1e-4)
     
-    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July"
+    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\Aug_rte_rand"
     
     """
-    one : prototype,
-    two : l2rpn environment changed into Topology action only
-    Three: with parameter on substation max and cool down
-    
-    Four : with bigger batch and Percentile
+    one : prototype, Batch_size = 100, 95% filter, random action 2%
+    two : Batch_size = 50, 80% filter, random action 3%
+    three : Batch_size = 50, 90% filter, no random
+    Four : Batch_size =100, 95% filter
+    Five : same as four
 
     """
     
     
-    path_1 = os.path.join(path_name, 'four')
-    path_2 = os.path.join(path_name, 'four_entire')
+    path_1 = os.path.join(path_name, 'fve')
+    path_2 = os.path.join(path_name, 'five_entire')
     
-    path_to_save = os.path.join(path_name, 'save_4')
-    path_to_save_DN = os.path.join(path_name, 'DN')
+    path_to_save = os.path.join(path_name, 'save_5')
     
-    writer = SummaryWriter(comment="-Agent_4_l2rpn")
+    writer = SummaryWriter(comment="-Agent_5_rte_rand")
 
-    trainend = True
+    trainend = False
 
     if trainend == False:
 
@@ -259,7 +263,8 @@ if __name__ == "__main__":
             writer.add_scalar("loss", loss_v.item(), iter_no)
             writer.add_scalar("reward_bound", reward_b, iter_no)
             writer.add_scalar("reward_mean", reward_m, iter_no)
-            if loss_v.item() < 0.0001:
+            # if loss_v.item() < 0.0001:
+            if reward_m > 30000:
                 print("Solved!")
                 
                 torch.save(net.state_dict(), path_1)
@@ -267,10 +272,6 @@ if __name__ == "__main__":
                 
                 break
         writer.close()
-    
-    
-    
-    
     
     else:
         
@@ -288,8 +289,7 @@ if __name__ == "__main__":
         # env = grid2op.make('l2rpn_2019_test')
         # env_test = grid2op.make('l2rpn_2019_test')
         
-        env_test = env_test
-        # env_test = grid2op.make('l2rpn_2019_test')
+        env_test = env_test 
         
         from grid2op.Runner import Runner
         from grid2op.Reward import L2RPNReward
@@ -314,18 +314,17 @@ if __name__ == "__main__":
             
         #%%  incase for DN Agent comparasion
 
-        from grid2op.Agent import DoNothingAgent
-        #DN
-        runner_DN = Runner(**env_test.get_params_for_runner(),
-                        agentClass=DoNothingAgent
-                        )
-        res_DN = runner_DN.run(path_save=path_to_save_DN,nb_episode=10 ,nb_process=1, pbar = True)
+        # from grid2op.Agent import DoNothingAgent
+        # #DN
+        # runner_DN = Runner(**env_test.get_params_for_runner(),
+        #                 agentClass=DoNothingAgent
+        #                 )
+        # res_DN = runner_DN.run(nb_episode=10 ,nb_process=1, pbar = True)
 
-        print("The results for DoNothing agent are:")
-        for _, chron_name, cum_reward, nb_time_step, max_ts in res_DN:
-            msg_tmp_DN = "\tFor chronics with id {}\n".format(chron_name)
-            msg_tmp_DN += "\t\t - cumulative reward: {:.6f}\n".format(cum_reward)
-            msg_tmp_DN += "\t\t - number of time steps completed: {:.0f} / {:.0f}".format(nb_time_step, max_ts)
-            print(msg_tmp_DN)
+        # print("The results for DoNothing agent are:")
+        # for _, chron_name, cum_reward, nb_time_step, max_ts in res_DN:
+        #     msg_tmp_DN = "\tFor chronics with id {}\n".format(chron_name)
+        #     msg_tmp_DN += "\t\t - cumulative reward: {:.6f}\n".format(cum_reward)
+        #     msg_tmp_DN += "\t\t - number of time steps completed: {:.0f} / {:.0f}".format(nb_time_step, max_ts)
+        #     print(msg_tmp_DN)
             
-    

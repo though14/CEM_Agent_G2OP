@@ -27,8 +27,8 @@ from A01_01_Main_Prep import p
 
 class TopoStudy():
     def __init__(self, 
-                 PATH_FOLDER_INCLUDING_AGENT ="C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July_Sandbox",
-                 NAME_OF_FOLDER_WANT_TO_SEE = "save_5"
+                 PATH_FOLDER_INCLUDING_AGENT ="C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July",
+                 NAME_OF_FOLDER_WANT_TO_SEE = "save_4"
                  ):
         self.path_name = PATH_FOLDER_INCLUDING_AGENT
         self.path_to_load = os.path.join(self.path_name, NAME_OF_FOLDER_WANT_TO_SEE)
@@ -519,14 +519,14 @@ if __name__ == "__main__" :
     # path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July"
     # path_to_save = os.path.join(path_name, 'save_4')   #for l2rpn2019
     
-    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\July_rte"
-    path_to_save = os.path.join(path_name, 'save_2')
+    path_name = "C:\\Users\\thoug\\OneDrive\\SS2023\\Internship\\04_Code\\CEM_Agent_G2OP\\File\\Agent\\Aug_rte_rand"
+    path_to_save = os.path.join(path_name, 'save_4')
     
     a = TopoStudy(path_name, path_to_save)
     # b = TOPO_Graph()
     # c = EPD()
 #%%    
-    all_obs = a.obs_read(1) #changing this will make pattern Analysis see the different EP for pattern
+    all_obs = a.obs_read(0) #changing this will make pattern Analysis see the different EP for pattern
     
     list_obs = a.list_obs()
     
@@ -549,7 +549,7 @@ if __name__ == "__main__" :
     pattern = a.find_pattern(per_ep_change['changes'][0])
     
     for_Survived_data = pd.DataFrame()
-    for k in range(0,2):
+    for k in range(0,10):
         for_survived_step = a.survival_length(EPISODE_NUMBER=k)
        
         for_Survived_data.join(for_survived_step)

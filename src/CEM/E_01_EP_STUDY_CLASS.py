@@ -471,6 +471,16 @@ class TopoStudy():
         return mean_topo_depth, total_topology_change, total_number_base
     
     
+    def make_gif(self, EP_ID, NAME_GIF, START_STEP, END_STEP):
+        from grid2op.Episode import EpisodeReplay
+        plot_epi_MY = EpisodeReplay(self.path_to_load)
+        
+        EP_ID_STR = str(EP_ID)
+        NAME_GIF_STR = str(NAME_GIF)
+        
+        plot_epi_MY.replay_episode(episode_id = EP_ID_STR, fps = 2.0, gif_name =NAME_GIF_STR, start_step = START_STEP, end_step = END_STEP)
+        
+        
     
 class TOPO_Graph():
     def __init__(self):

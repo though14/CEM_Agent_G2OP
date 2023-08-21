@@ -247,7 +247,7 @@ if __name__ == "__main__":
     
     writer = SummaryWriter(comment="-Agent_5_rte_rand")
 
-    trainend = False
+    trainend = True
 
     if trainend == False:
 

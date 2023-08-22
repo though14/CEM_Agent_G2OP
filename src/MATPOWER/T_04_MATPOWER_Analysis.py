@@ -212,6 +212,10 @@ df_w_TOPO = pd.DataFrame(w_TOPO)
 df_w_TOPO.columns = TOPO_TABLE_KEY
 df_unique_topo.columns = TOPO_TABLE_KEY
 
+
+
+loc_change = np.where(df_unique_topo.loc['t2'] != df_unique_topo.loc['t3'])
+
 """
 to find the location of pattern_to_topology
 

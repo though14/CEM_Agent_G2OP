@@ -8,6 +8,7 @@ import numpy as np
 import mat73
 import pandas as pd
 import scipy.io as sio
+import re
 
 
 data_dict = mat73.loadmat('20230808_134002_case14realistic_197_rd.mat')
@@ -172,6 +173,19 @@ pattern_to_topology[0].str.replace('\W','')
 
 
 Pattern_pre_processed = analyze_pattern(w_TOPO)
+unique_topo = Pattern_pre_processed[0]
+unique_topo = {value: key for key, value in unique_topo.items()}
+for key in unique_topo:
+    value = unique_topo[key]
+    value = re.findall(r'\d+', value)  # Extract numeric values
+    unique_topo[key] = list(map(int, value))  # Convert values to integers
+    #it extract only numeric values, so at t4, where everything disconnected into -1, becomes just 1. 
+    #this needs to be fixed
+
+    
+
+df_unique_topo = pd.DataFrame.from_dict(data=unique_topo, orient='index')
+
 # wo_Pattern = analyze_pattern(wo_TOPO)
 
 
@@ -180,11 +194,23 @@ rep_df = pd.DataFrame.from_dict(rep, orient='index')
 print(f'the number of total Topology played: {rep_df.sum(0)[0]}')
 
 
-with open('unique_key_str.txt') as f:
-    unique_key_value = f.readlines()
+# with open('unique_key_str.txt') as f:
+#     unique_key_value = f.readlines()
     
-unique_key = pd.DataFrame(unique_key_value)
-unique_key[0] = unique_key[0].str.replace('\W','')
+# unique_key = pd.DataFrame(unique_key_value)
+# unique_key[0] = unique_key[0].str.replace('\W','')
+
+
+
+TOPO_TABLE_KEY = ['DISC_1_1','DISC_1_2','DISC_1_3','DISC_2_01','DISC_2_02','DISC_2_03','DISC_2_04','DISC_2_05','DISC_2_06','DISC_3_1','DISC_3_2','DISC_3_3','DISC_3_4','DISC_4_01','DISC_4_02','DISC_4_03','DISC_4_04','DISC_4_05','DISC_4_06','DISC_5_01',
+'DISC_5_02','DISC_5_03','DISC_5_04','DISC_5_05','DISC_6_01','DISC_6_02','DISC_6_03','DISC_6_04','DISC_6_05','DISC_6_06','DISC_7_1',
+'DISC_7_2','DISC_7_3','DISC_8_1','DISC_8_2','DISC_9_01','DISC_9_02','DISC_9_03','DISC_9_04','DISC_9_05','DISC_10_1','DISC_10_2',
+'DISC_10_3','DISC_11_1','DISC_11_2','DISC_11_3','DISC_12_1','DISC_12_2','DISC_12_3','DISC_13_1','DISC_13_2','DISC_13_3',
+'DISC_13_4','DISC_14_1','DISC_14_2','DISC_14_3']
+
+df_w_TOPO = pd.DataFrame(w_TOPO)
+df_w_TOPO.columns = TOPO_TABLE_KEY
+df_unique_topo.columns = TOPO_TABLE_KEY
 
 """
 to find the location of pattern_to_topology

@@ -1,0 +1,31 @@
+The results for the my agent are:
+	For chronics with id 197
+		 - cumulative reward: 13633.377930
+		 - number of time steps completed: 810 / 8064
+	For chronics with id 234
+		 - cumulative reward: 13316.724609
+		 - number of time steps completed: 812 / 8064
+	For chronics with id 347
+		 - cumulative reward: 6141.534180
+		 - number of time steps completed: 378 / 8064
+	For chronics with id 482
+		 - cumulative reward: 17999.818359
+		 - number of time steps completed: 1097 / 8064
+	For chronics with id 524
+		 - cumulative reward: 17962.857422
+		 - number of time steps completed: 1097 / 8064
+	For chronics with id 578
+		 - cumulative reward: 13479.436523
+		 - number of time steps completed: 807 / 8064
+	For chronics with id 753
+		 - cumulative reward: 27400.712891
+		 - number of time steps completed: 1670 / 8064
+	For chronics with id 772
+		 - cumulative reward: 17626.384766
+		 - number of time steps completed: 1086 / 8064
+	For chronics with id 838
+		 - cumulative reward: 13293.332031
+		 - number of time steps completed: 807 / 8064
+	For chronics with id 916
+		 - cumulative reward: 13387.304688
+		 - number of time steps completed: 806 / 8064

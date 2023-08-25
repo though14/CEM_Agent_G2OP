@@ -1,0 +1,11 @@
+{
+    "agent_seed": null,
+    "backend_type": "PandaPowerBackend_l2rpn_2019_test",
+    "chronics_max_timestep": "7488",
+    "chronics_path": "C:\\Users\\thoug\\data_grid2op\\l2rpn_2019_test\\chronics\\0286",
+    "cumulative_reward": 143689.0625,
+    "env_seed": null,
+    "env_type": "Environment_l2rpn_2019_test",
+    "grid_path": "C:\\Users\\thoug\\data_grid2op\\l2rpn_2019_test\\grid.json",
+    "nb_timestep_played": 7488
+}

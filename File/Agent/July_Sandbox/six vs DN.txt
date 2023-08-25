@@ -1,0 +1,33 @@
+The results for the my agent are:
+	For chronics with id 0038
+		 - cumulative reward: 72257.859375
+		 - number of time steps completed: 4551 / 8064
+	For chronics with id 0186
+		 - cumulative reward: 44793.320312
+		 - number of time steps completed: 2820 / 8064
+	For chronics with id 0322
+		 - cumulative reward: 8316.344727
+		 - number of time steps completed: 517 / 8064
+	For chronics with id 0491
+		 - cumulative reward: 14818.428711
+		 - number of time steps completed: 951 / 8064
+	For chronics with id 0501
+		 - cumulative reward: 8199.604492
+		 - number of time steps completed: 518 / 8064
+
+DoNothing agent are:
+	For chronics with id 0038
+		 - cumulative reward: 72133.062500
+		 - number of time steps completed: 4551 / 8064
+	For chronics with id 0186
+		 - cumulative reward: 44487.714844
+		 - number of time steps completed: 2820 / 8064
+	For chronics with id 0322
+		 - cumulative reward: 8315.533203
+		 - number of time steps completed: 517 / 8064
+	For chronics with id 0491
+		 - cumulative reward: 8179.587891
+		 - number of time steps completed: 518 / 8064
+	For chronics with id 0501
+		 - cumulative reward: 8174.634766
+		 - number of time steps completed: 518 / 8064

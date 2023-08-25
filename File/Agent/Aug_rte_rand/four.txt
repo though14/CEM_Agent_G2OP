@@ -1,0 +1,30 @@
+For chronics with id 197
+		 - cumulative reward: 46408.179688
+		 - number of time steps completed: 2827 / 8064
+	For chronics with id 234
+		 - cumulative reward: 51312.289062
+		 - number of time steps completed: 3118 / 8064
+	For chronics with id 347
+		 - cumulative reward: 6011.151855
+		 - number of time steps completed: 375 / 8064
+	For chronics with id 482
+		 - cumulative reward: 24668.521484
+		 - number of time steps completed: 1545 / 8064
+	For chronics with id 524
+		 - cumulative reward: 50245.070312
+		 - number of time steps completed: 3114 / 8064
+	For chronics with id 578
+		 - cumulative reward: 58925.785156
+		 - number of time steps completed: 3685 / 8064
+	For chronics with id 753
+		 - cumulative reward: 26921.826172
+		 - number of time steps completed: 1667 / 8064
+	For chronics with id 772
+		 - cumulative reward: 17353.375000
+		 - number of time steps completed: 1088 / 8064
+	For chronics with id 838
+		 - cumulative reward: 15759.908203
+		 - number of time steps completed: 973 / 8064
+	For chronics with id 916
+		 - cumulative reward: 39053.667969
+		 - number of time steps completed: 2390 / 8064

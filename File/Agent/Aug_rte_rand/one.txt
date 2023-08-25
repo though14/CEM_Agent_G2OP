@@ -1,0 +1,67 @@
+The results for the my agent are:
+	For chronics with id 197
+		 - cumulative reward: 25434.423828
+		 - number of time steps completed: 1542 / 8064
+	For chronics with id 234
+		 - cumulative reward: 6369.472656
+		 - number of time steps completed: 383 / 8064
+	For chronics with id 347
+		 - cumulative reward: 3757.596191
+		 - number of time steps completed: 230 / 8064
+	For chronics with id 482
+		 - cumulative reward: 17528.181641
+		 - number of time steps completed: 1092 / 8064
+	For chronics with id 524
+		 - cumulative reward: 8675.020508
+		 - number of time steps completed: 522 / 8064
+	For chronics with id 578
+		 - cumulative reward: 13334.333008
+		 - number of time steps completed: 810 / 8064
+	For chronics with id 753
+		 - cumulative reward: 16035.379883
+		 - number of time steps completed: 981 / 8064
+	For chronics with id 772
+		 - cumulative reward: 15606.812500
+		 - number of time steps completed: 964 / 8064
+	For chronics with id 838
+		 - cumulative reward: 6864.656250
+		 - number of time steps completed: 408 / 8064
+	For chronics with id 916
+		 - cumulative reward: 13187.807617
+		 - number of time steps completed: 804 / 8064
+
+
+
+
+
+he results for DoNothing agent are:
+	For chronics with id 197
+		 - cumulative reward: 13554.583008
+		 - number of time steps completed: 810 / 8064
+	For chronics with id 234
+		 - cumulative reward: 13219.648438
+		 - number of time steps completed: 812 / 8064
+	For chronics with id 347
+		 - cumulative reward: 6015.416992
+		 - number of time steps completed: 374 / 8064
+	For chronics with id 482
+		 - cumulative reward: 17693.646484
+		 - number of time steps completed: 1097 / 8064
+	For chronics with id 524
+		 - cumulative reward: 17868.636719
+		 - number of time steps completed: 1097 / 8064
+	For chronics with id 578
+		 - cumulative reward: 13212.437500
+		 - number of time steps completed: 806 / 8064
+	For chronics with id 753
+		 - cumulative reward: 27055.708984
+		 - number of time steps completed: 1667 / 8064
+	For chronics with id 772
+		 - cumulative reward: 17375.312500
+		 - number of time steps completed: 1084 / 8064
+	For chronics with id 838
+		 - cumulative reward: 13180.333008
+		 - number of time steps completed: 807 / 8064
+	For chronics with id 916
+		 - cumulative reward: 13257.748047
+		 - number of time steps completed: 807 / 8064

@@ -143,9 +143,9 @@ class TopoStudy():
             
             
             df_change_list_loc = pd.DataFrame(change_list_final, columns=['element_id'])
-            df_sub_id = pd.DataFrame(np.array([0,0,0,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,5,6,6,6,7,7,8,8,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,12,13,13,13]), columns = ['sub_id'])
+            df_sub_id = pd.DataFrame(np.array([0,0,0,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,6,6,6,7,7,8,8,8,8,8,9,9,9,10,10,10,11,11,11,12,12,12,12,13,13,13]), columns = ['sub_id'])
             
-            d_obs_attr = {'obs_attr': ['LO', 'LO','G','LE','LO','LO','LO','G','L','LE','LO','G','L','LE','LE','LO','LO','LO','L','LE','LE','LE','LO','L','LE','LO','LO','LO','G','G','L','LE','LO','LO','LE','G','LE','LE','LO','LO','L','LE','LO','L','LE','LE','L','LE','LO','L','LE','LE','LO','L','LE','LE','L']}
+            d_obs_attr = {'obs_attr': ['LO', 'LO','G','LE','LO','LO','LO','G','L','LE','LO','G','L','LE','LE','LO','LO','LO','L','LE','LE','LE','LO','L','LE','LO','LO','LO','G','L','LE','LO','LO','LE','G','LE','LE','LO','LO','L','LE','LO','L','LE','LE','L','LE','LO','L','LE','LE','LO','L','LE','LE','L']}
             df_obs_attr = pd.DataFrame(d_obs_attr)
             
             
